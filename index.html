@@ -2,72 +2,176 @@
 <html lang="pt-br">
 <head>
   <meta charset="utf-8">
-  <title>Fila Do Banheiro 🚻</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Fila do Banheiro · 2ª A — DS</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+  <meta name="theme-color" content="#0f1115">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600;9..144,700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="/utlis/index.css">
 </head>
 <body>
 
+  <!-- Cabeçalho -->
   <header class="top-header">
     <div class="header-content">
-      <div class="header-logo">
-        <img src="/img/mascote1.png" alt="Logo da Turma">
-      </div>
-      <div class="header-title">2ª A - DS</div>
-      <nav class="header-nav">
-        <a href="https://systemsdev.com.br/sala.html#progress">Projetos</a>
+      <a href="#" class="brand">
+        <span class="brand-mark">
+          <img src="/img/mascote1.png" alt="">
+        </span>
+        <span class="brand-text">
+          <span class="brand-label">Turma</span>
+          <span class="brand-title">2ª A — DS</span>
+        </span>
+      </a>
+
+      <nav class="header-nav" aria-label="Navegação principal">
+        <a href="https://systemsdev.com.br/sala.html#progress" class="nav-link">
+          <span>Projetos</span>
+          <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
+            <path d="M3 9L9 3M9 3H4M9 3V8" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </a>
       </nav>
+
+      <button class="menu-toggle" id="menuToggle" aria-label="Abrir menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
     </div>
   </header>
 
-<a id="linkSala" class="desktop-link" href="#">—</a>
+  <!-- Menu lateral mobile -->
+  <aside class="nav-menu" id="navMenu" aria-hidden="true">
+    <div class="nav-menu-header">
+      <span class="nav-menu-title">Menu</span>
+      <button class="nav-close" id="navClose" aria-label="Fechar menu">×</button>
+    </div>
+    <ul class="nav-menu-list">
+      <li><a href="../sala.html#progress">Projetos</a></li>
+    </ul>
+    <div class="nav-menu-footer">
+      <span class="nav-room-label">Sala atual</span>
+      <span class="nav-room-value" id="linkSala">—</span>
+    </div>
+  </aside>
+  <div class="nav-backdrop" id="navBackdrop"></div>
 
-<button class="menu-toggle" id="menuToggle">☰</button>
-<ul class="nav-menu" id="navMenu">
-  <li><a href="../sala.html#progress">Projetos</a></li>
-</ul>
+  <main class="page">
 
-  <div id="inicioTurma">
-    <h2>Fila do banheiro 🚻</h2>
-    <h2>Digite sua sala</h2>
-    <form id="formTurma" onsubmit="salvarTurma(event)">
-      <input id="turma" type="text" placeholder="Ex: 2º A - DS" required>
-      <button type="submit">Confirmar</button>
-    </form>
-  </div>
-  <form id="formFila" onsubmit="entrarFila(event)" style="display:none;">
-    <h2>Fila do Banheiro 🚻</h2>
-    <input id="nome" type="text" placeholder="Digite seu nome" required>
-    <button type="submit">Entrar na fila</button>
-  </form>
+    <!-- Tela inicial: Digite a sala -->
+    <section id="inicioTurma" class="card card--intro">
+      <div class="intro-eyebrow">
+        <span class="dot"></span>
+        <span>Sistema de Controle</span>
+      </div>
+      <h1 class="intro-title">Fila do Banheiro</h1>
+      <p class="intro-subtitle">Organize o acesso da turma com tempo monitorado e histórico completo.</p>
 
-  <form id="formFila" onsubmit="entrarFila(event)" style="display:none;">
-    <input id="nome" type="text" placeholder="Digite seu nome" required>
-    <button type="submit">Entrar na fila</button>
-  </form>
-  <div id="alerta"></div>
+      <form id="formTurma" class="form form--stacked" onsubmit="salvarTurma(event)">
+        <label for="turma" class="form-label">Identifique sua sala</label>
+        <div class="form-row">
+          <input id="turma" type="text" placeholder="Ex.: 2º A — DS" autocomplete="off" required>
+          <button type="submit" class="btn btn--primary">
+            <span>Iniciar</span>
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <path d="M3 7H11M11 7L7 3M11 7L7 11" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </button>
+        </div>
+      </form>
+    </section>
 
-  <div id="painel" style="display:none;">
-    <h2 id="turmaMobile" class="turma-mobile"></h2>
-    <h2>Agora usando: <span id="usuarioAtual">—</span></h2>
-    <div class="timer" id="visor">00:00</div><br>
-    <button onclick="finalizar()">⏹ Concluir</button>
-    <h3>Fila de espera</h3>
-    <ul id="listaFila"></ul>
-    <h3>Histórico</h3>
-    <table id="tabelaHistorico">
-      <thead>
-        <tr>
-          <th>Nome</th>
-          <th>Início</th>
-          <th>Término</th>
-          <th>Duração</th>
-        </tr>
-      </thead>
-      <tbody></tbody>
-    </table>
-    <button id="btnBaixarHistorico" onclick="baixarExcel()">⬇️ Baixar histórico em Excel</button>
-  </div>
+    <!-- Tela de entrada na fila -->
+    <section id="formFilaWrap" class="card card--queue" style="display:none;">
+      <header class="card-header">
+        <h2 class="card-title">Entrar na fila</h2>
+        <span class="badge badge--live">
+          <span class="badge-dot"></span>
+          Ativo
+        </span>
+      </header>
+
+      <form id="formFila" class="form form--stacked" onsubmit="entrarFila(event)">
+        <label for="nome" class="form-label">Seu nome</label>
+        <div class="form-row">
+          <input id="nome" type="text" placeholder="Digite seu nome completo" autocomplete="off" required>
+          <button type="submit" class="btn btn--primary">Entrar</button>
+        </div>
+        <div id="alerta" class="alert" role="alert"></div>
+      </form>
+    </section>
+
+    <!-- Painel principal -->
+    <section id="painel" class="panel" style="display:none;">
+
+      <!-- Card do timer -->
+      <article class="card card--timer">
+        <div class="timer-head">
+          <span class="timer-label">Agora utilizando</span>
+          <span class="timer-status" id="timerStatus">aguardando</span>
+        </div>
+        <div class="timer-user" id="usuarioAtual">—</div>
+        <div class="timer-display" id="visor">00:00</div>
+        <div class="timer-actions">
+          <button onclick="finalizar()" class="btn btn--danger">
+            <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden="true">
+              <rect x="3" y="3" width="8" height="8" rx="1.5" fill="currentColor"/>
+            </svg>
+            <span>Concluir uso</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- Grid de informações -->
+      <div class="info-grid">
+
+        <!-- Fila -->
+        <article class="card card--list">
+          <header class="card-header">
+            <h3 class="card-title">Fila de espera</h3>
+            <span class="badge" id="badgeFila">00</span>
+          </header>
+          <ul id="listaFila" class="queue-list">
+            <li class="queue-empty">Nenhuma pessoa aguardando</li>
+          </ul>
+        </article>
+
+        <!-- Histórico -->
+        <article class="card card--history">
+          <header class="card-header">
+            <h3 class="card-title">Histórico</h3>
+            <button id="btnBaixarHistorico" onclick="baixarExcel()" class="btn btn--ghost btn--sm">
+              <svg width="13" height="13" viewBox="0 0 13 13" fill="none" aria-hidden="true">
+                <path d="M6.5 1.5V8.5M6.5 8.5L3.5 5.5M6.5 8.5L9.5 5.5M2 10.5H11" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              </svg>
+              <span>Excel</span>
+            </button>
+          </header>
+          <div class="table-wrap">
+            <table id="tabelaHistorico">
+              <thead>
+                <tr>
+                  <th>Nome</th>
+                  <th>Início</th>
+                  <th>Término</th>
+                  <th>Duração</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr class="table-empty"><td colspan="4">Sem registros ainda</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </article>
+
+      </div>
+    </section>
+  </main>
+
+  <footer class="page-footer">
+    <span>Fila do Banheiro · Sistema escolar</span>
+    <span class="footer-room">Sala: <strong id="footerRoom">—</strong></span>
+  </footer>
 
   <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
   <script src="/utlis/index.js"></script>
