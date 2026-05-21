@@ -1,0 +1,75 @@
+<!doctype html>
+<html lang="pt-br">
+<head>
+  <meta charset="utf-8">
+  <title>Fila Do Banheiro 🚻</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="/utlis/index.css">
+</head>
+<body>
+
+  <header class="top-header">
+    <div class="header-content">
+      <div class="header-logo">
+        <img src="/img/mascote1.png" alt="Logo da Turma">
+      </div>
+      <div class="header-title">2ª A - DS</div>
+      <nav class="header-nav">
+        <a href="https://systemsdev.com.br/sala.html#progress">Projetos</a>
+      </nav>
+    </div>
+  </header>
+
+<a id="linkSala" class="desktop-link" href="#">—</a>
+
+<button class="menu-toggle" id="menuToggle">☰</button>
+<ul class="nav-menu" id="navMenu">
+  <li><a href="../sala.html#progress">Projetos</a></li>
+</ul>
+
+  <div id="inicioTurma">
+    <h2>Fila do banheiro 🚻</h2>
+    <h2>Digite sua sala</h2>
+    <form id="formTurma" onsubmit="salvarTurma(event)">
+      <input id="turma" type="text" placeholder="Ex: 2º A - DS" required>
+      <button type="submit">Confirmar</button>
+    </form>
+  </div>
+  <form id="formFila" onsubmit="entrarFila(event)" style="display:none;">
+    <h2>Fila do Banheiro 🚻</h2>
+    <input id="nome" type="text" placeholder="Digite seu nome" required>
+    <button type="submit">Entrar na fila</button>
+  </form>
+
+  <form id="formFila" onsubmit="entrarFila(event)" style="display:none;">
+    <input id="nome" type="text" placeholder="Digite seu nome" required>
+    <button type="submit">Entrar na fila</button>
+  </form>
+  <div id="alerta"></div>
+
+  <div id="painel" style="display:none;">
+    <h2 id="turmaMobile" class="turma-mobile"></h2>
+    <h2>Agora usando: <span id="usuarioAtual">—</span></h2>
+    <div class="timer" id="visor">00:00</div><br>
+    <button onclick="finalizar()">⏹ Concluir</button>
+    <h3>Fila de espera</h3>
+    <ul id="listaFila"></ul>
+    <h3>Histórico</h3>
+    <table id="tabelaHistorico">
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>Início</th>
+          <th>Término</th>
+          <th>Duração</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+    <button id="btnBaixarHistorico" onclick="baixarExcel()">⬇️ Baixar histórico em Excel</button>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/exceljs/dist/exceljs.min.js"></script>
+  <script src="/utlis/index.js"></script>
+</body>
+</html>
